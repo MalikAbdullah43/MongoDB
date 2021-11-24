@@ -23,7 +23,7 @@ class PasswordController extends Controller
         $this->collection = $databse->users;
     }
     public function forgetPassword(ForgetPasswordRequest $req)
-    {   try{
+    {  
         $req->validated();
         $otp = rand(111111, 999999);
         //Token
@@ -63,13 +63,11 @@ class PasswordController extends Controller
                 200
             );
         }
-    }
-    catch(\Exception $ex){
-        $response->set_error_response(null,$ex->getMessage(), "500","Server error");
-        return $response->error_respond_api();}
+    
+   
 }
     public function mail($email, $otp)
-    { try{
+    { 
         $details = [
             'title' => 'Hello Dear User',
             'Message' => 'This is  Your Otp:' . $otp,
@@ -79,14 +77,10 @@ class PasswordController extends Controller
         Mail::to('malikabdullah4300@gmail.com')->send(new PasswordMail($details));
         return "Email Send";
     }
-    catch(\Exception $ex){
-        $response->set_error_response(null,$ex->getMessage(), "500","Server error");
-        return $response->error_respond_api();}
-    }
 
     //Reset Password
     public function passwordReset(ResetPasswordRequest $req)
-    { try{
+    {
         $req->validated();
         $otp = $req->otp;
         $jwt = $req->bearerToken();
@@ -117,9 +111,7 @@ class PasswordController extends Controller
             return response(["Message" => "OTP Expire or Invalid Otp", "Status" => "404"], 404);
         }
     }
-    catch(\Exception $ex){
-        $response->set_error_response(null,$ex->getMessage(), "500","Server error");
-        return $response->error_respond_api();}
+    
     }
    
-}
+

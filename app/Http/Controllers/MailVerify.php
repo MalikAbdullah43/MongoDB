@@ -12,7 +12,7 @@ class MailVerify extends Controller
 {
     public function verify($email)
     {
-        try {
+        
             $connect    = new ConnectionService();
             $databse    = $connect->getdb();
             $collection = "users";
@@ -26,11 +26,9 @@ class MailVerify extends Controller
             } else {
                 return "Already Verified Or Link Expire";
             }
-        } catch (\Exception $ex) {
-            $response->set_error_response(null, $ex->getMessage(), "500", "Server error");
-            return $response->error_respond_api();
         }
-    }
+    
+    
 
 
 
@@ -38,7 +36,7 @@ class MailVerify extends Controller
 
     public function regenrate_link($email)
     {
-        try {
+        
             $connect    = new ConnectionService();
             $databse    = $connect->getdb();
             $collection = "users";
@@ -61,9 +59,6 @@ class MailVerify extends Controller
                 return "Email Regenrate Successfully";
             else
                 return "Link Already Verify";
-        } catch (\Exception $ex) {
-            $response->set_error_response(null, $ex->getMessage(), "500", "Server error");
-            return $response->error_respond_api();
-        }
+        } 
     }
-}
+

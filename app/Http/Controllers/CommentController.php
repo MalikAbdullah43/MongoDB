@@ -28,7 +28,7 @@ class CommentController extends Controller
 
     public function commentCreate(CreateCommentRequest $req)
     {
-        try {
+    
             $req->validated();
             //Finding Active User ID
             $token = request()->bearerToken();
@@ -96,17 +96,14 @@ class CommentController extends Controller
                 else
                     return response(["Message" => "Error Occure", "Status" => "500"], 500);
             }
-        } catch (\Exception $ex) {
-            $response->set_error_response(null, $ex->getMessage(), "500", "Server error");
-            return $response->error_respond_api();
-        }
+        
     }
 
 
     ///Comment Deletion End Point
     public function commentDelete(Request $req)
     {
-        try {
+        
             $token = request()->bearerToken();
             $secret_key = "Malik$43";
             $decoded = JWT::decode($token, new Key($secret_key, 'HS256'));
@@ -126,9 +123,7 @@ class CommentController extends Controller
                 return response(["Message" => "Successfully Comment Delete", "Status" => "200"], 200);
             } else
                 return response(["Message" => "Comment Not Exist", "Status" => "404"], 404);
-        } catch (\Exception $ex) {
-            $response->set_error_response(null, $ex->getMessage(), "500", "Server error");
-            return $response->error_respond_api();
+      
         }
     }
-}
+

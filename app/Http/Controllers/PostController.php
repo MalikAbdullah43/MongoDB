@@ -20,7 +20,7 @@ class PostController extends Controller
     //This Function For Create Post
     public function postCreate(PostRequest $req)
     {
-        try{
+        
         $req->validated();
         $token = request()->bearerToken();
         $secret_key = "Malik$43";
@@ -46,16 +46,14 @@ class PostController extends Controller
         else
             return response(["Message" => "Error Occure in Post Create Posts", "Status" => "404"], 404);
     }
-    catch(Exception $ex){
-        $response->set_error_response(null,$ex->getMessage(), "500","Server error");
-        return $response->error_respond_api();
-}
-    }
+   
+
+    
 
     //This Function Use For Check Which posts User Post
     public function userPosts(Request $request)
     {
-       try{
+       
         $token = request()->bearerToken();
         $secret_key = "Malik$43";
         $decoded = JWT::decode($token, new Key($secret_key, 'HS256'));
@@ -64,14 +62,12 @@ class PostController extends Controller
 
         $user = $this->collection->find(['user_id' => $decoded->data->_id, 'deleted_at' => null]);
         return response()->json($user->toArray());
-       }
-       catch(Exception $ex){
-        $response->set_error_response(null,$ex->getMessage(), "500","Server error");
-        return $response->error_respond_api();}
+       
+      
     }
     //This Function For User Which Post User Want to Update
     public function postUpdate(PostRequest $req)
-    {  try{
+    {  
         $req->validated();
         $postId = $req->pid;
         $token = request()->bearerToken();
@@ -104,17 +100,15 @@ class PostController extends Controller
             return response(["Message" => "Post Not Found", "Status" => "404",], 404);
         }
     }
-    catch(Exception $ex){
-        $response->set_error_response(null,$ex->getMessage(), "500","Server error");
-        return $response->error_respond_api();}
-    }
+    
+    
 
 
 
     //This Function For Delete Post
     public function postDelete(Request $req)
     { 
-        try{
+       
         $token = request()->bearerToken();
         $secret_key = "Malik$43";
         $decoded = JWT::decode($token, new Key($secret_key, 'HS256'));
@@ -131,14 +125,12 @@ class PostController extends Controller
                 return response(["Message" => "Post Not Found", "Status" => "404"], 404);
         } else
             return response(["Message" => "Post Not Found", "Status" => "404"], 404);}
-        catch(Exception $ex){
-                $response->set_error_response(null,$ex->getMessage(), "500","Server error");
-                return $response->error_respond_api();}
-    }
+        
+    
     //Post Search
     public function postSearch(Request $request)
     {
-        try{
+        
         // Get the search value from the request
         $search = $request->search;
         // Search in the title and body columns from the posts collectons
@@ -149,8 +141,6 @@ class PostController extends Controller
         // // Return the if Not Found Any Post
         else
             return response(["Message" => "Result Not Found", "Status" => "404"], 404);
-    }catch(Exception $ex){
-        $response->set_error_response(null,$ex->getMessage(), "500","Server error");
-        return $response->error_respond_api();}
+    }
 }
-}
+
